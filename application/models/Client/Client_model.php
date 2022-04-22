@@ -14,6 +14,16 @@ class Client_model extends CI_Model
             return false;
         }
     }
+    /**selectione un client a partir de son user */
+    public function get_user_cli($user)
+    {
+        $query = $this->db->get_where('client', ['user_cli' => $user]);
+        if($query->num_rows()>0){
+            return $query->result_array();
+        }else{
+            return false;
+        }
+    }
     /**ajoute un nouveau client en bd */
     public function add_client($data)
     {
@@ -22,6 +32,16 @@ class Client_model extends CI_Model
     /**selectione un client a partir de son email */
     public function getuser($email){
         $query = $this->db->where('client.email_cli',$email)->get('client');
+        if($query->num_rows()>0){
+            return $query->row_array();
+        }else{
+            return false;
+        }
+    }
+    /**selectione un client a partir de son identifiant */
+    public function get_cli_id($id)
+    {
+        $query = $this->db->where('client.id_cli',$id)->get('client');
         if($query->num_rows()>0){
             return $query->row_array();
         }else{

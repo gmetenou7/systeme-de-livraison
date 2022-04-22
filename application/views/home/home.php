@@ -382,7 +382,7 @@
       }
     });
 
-    /**details d'un commande debut */
+    /**details d'une commande debut */
     $(this).on( "click", ".details_co", function() {
       var mat = $(this).attr("id");
       $.ajax({

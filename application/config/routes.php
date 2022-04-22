@@ -89,6 +89,10 @@ $route['notifications'] = 'Livreur/commande/notification';
  */
 $route['admin'] = 'Admin/Insert_com';
 $route['liste_pro'] = 'Admin/Insert_com/liste';
+$route['liste-des-clients'] = 'Admin/Liste';
+$route['ajout-client'] = 'Admin/Liste/add';
+$route['edit-client/(:num)'] = 'Admin/Liste/edit/$1';
+
 $route['insert'] = 'Admin/Insert_com/insert';
 $route['edit_pro/(:any)'] = 'Admin/Insert_com/edit/$1';
 

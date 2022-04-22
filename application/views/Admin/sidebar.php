@@ -35,7 +35,15 @@
                   Liste Produits
                 </p>
               </a>
-            </li>     
+            </li> 
+            <li class="nav-item">
+              <a href="<?=  base_url('index.php/liste-des-clients')?>" class="nav-link <?php if($this->uri->segment(1)=="liste-des-clients"){echo "active";}?>">
+                <i class="fa fa-list-alt"></i>
+                <p>
+                  Liste Clients
+                </p>
+              </a>
+            </li>         
           <?php endif ?>
         </ul>
       </nav>

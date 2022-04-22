@@ -30,49 +30,42 @@
                 <div class="x_panel">
                   <div class="x_content">
                     <br>
-                    <form id="demo" data-parsley-validate="" class="form-horizontal form-label-left" method="POST" action="<?php echo base_url('index.php/insert');?>">
+                    <form id="demo" data-parsley-validate="" class="form-horizontal form-label-left" method="POST" action="<?php echo base_url('index.php/admin');?>">
                       <table>
                         <tr>
                           <th>Nom Produit</th>
                           <th>Description</th>
                           <th>Quantité</th>
                           <th>Prix</th>
-                          <th>Entreprise</th>
                           <th>Id client </th>
                           <th>&nbsp&nbsp TVA</th>
-                          <th>status</th>
                         </tr>
                         <tr>
                           <td>
                             <div class="form-group rec-element">
                                 <input type="text" name="nom_pro[]" id="nom_pro1" alt="1" class="form-control" placeholder="Libellé">
                             </div> 
+                            <span class="text-danger"><?= form_error('nom_pro[]') ?></span> 
                           </td>
                           <td>
                             <div class="form-group">
                                 <input type="text" name="description[]" id="description1" alt="1" class="form-control" placeholder="Description">
-                            </div>        
+                            </div>
+                            <span class="text-danger"><?= form_error('description[]') ?></span>        
                           </td>
                           <td>
                             <div class="form-group">
                                 <input type="text" name="quantite[]" id="quantite1" alt="1" class="form-control" placeholder="Quantité">
                             </div> 
+                            <span class="text-danger"><?= form_error('quantite[]') ?></span> 
                           </td>
                           <td>
                             <div class="form-group">
                                 <input type="text" name="prix[]" id="prix" alt="1" class="form-control" placeholder="Prix">
                             </div>
+                            <span class="text-danger"><?= form_error('prix[]') ?></span>
                           </td>
-                          <td>
-                            <div class="form-group">
-                                <select name="entreprise[]" class="form-control">
-                                  <?php foreach ($entreprises as $entreprise):?>
-                                  <option><?= $entreprise['id_en']?></option><span>(<?= $entreprise['nom_en']?>)</span>
-                                  <?php endforeach ?>
-                                </select>
-                            </div>
-                          </td>  
-                          <!--<td>
+                      <!--<td>
                             <div class="form-group">
                                 <input type="text" name="nom_cli[]" id="nom_cli" alt="1" class="form-control" placeholder="Nom client">
                             </div> 
@@ -88,19 +81,19 @@
                           </td>
                           <td>
                             <div class="form-group">
-                                <select name="tva[]" class="form-control">
-                                  <option></option>
-                                  <option>20</option>
-                                  <option>30</option>
+                                <select name="entreprises[]" class="form-control">
+                                  <?php foreach ($entreprises as $entreprise):?>
+                                    <option><?= $entreprise['id_en']?></option>
+                                  <?php endforeach ?>
                                 </select>
                             </div>  
                           </td>
                           <td>
                             <div class="form-group">
-                                <select name="status[]" class="form-control">
-                                  <?php foreach ($status as $stat):?>
-                                  <option><?= $stat['id_etat']?></option><span>(<?= $stat['nom_etat']?>)</span>
-                                  <?php endforeach ?>
+                                <select name="tva[]" class="form-control">
+                                  <option></option>
+                                  <option>20</option>
+                                  <option>30</option>
                                 </select>
                             </div>  
                           </td>
@@ -116,7 +109,7 @@
                       <div class="ln_solid"></div> 
                       <div id="nextkolom" name="nextkolom"></div>
                       <button type="button" id="cache" value="1" style="display:none"></button>
-                      <button type="submit" class="btn btn-success">Ajouter</button>
+                      <button type="submit" name="ajouter" class="btn btn-success">Ajouter</button>
                     </form>
                   </div>
                 </div>
@@ -135,84 +128,74 @@
     $(".plus").on('click', function(){        
         row ='<div class="rec-element">'+
                 '<table>'+
-                  '<tr>'+
-                    '<td>'+
-                      '<div class="form-group">'+
-                        '<input type="text" name="nom_pro[]" id="nom_pro'+i+'" alt="'+i+'" class="form-control" placeholder="Libellé">'+
-                      '</div>'+
-                    '</td>'+ 
-                    '<td>'+  
-                      '<div class="form-group">'+
-                              '<input type="text" name="description[]" id="description'+i+'" alt="'+i+'" class="form-control" placeholder="Description">'+
-                      '</div>'+
-                    '</td>'+
-                    '<td>'+
-                      '<div class="form-group">'+                         
-                          '<div class="input-group">'+
-                            '<input type="text" name="quantite[]" id="quantite'+i+'" alt="'+i+'" class="form-control" placeholder="quantité">'+
-                          '</div>'+
+                '<tr>'+
+                  '<td>'+
+                    '<div class="form-group">'+
+                            '<input type="text" name="nom_pro[]" id="nom_pro'+i+'" alt="'+i+'" class="form-control" placeholder="Libellé">'+
+                    '</div>'+
+                  '</td>'+ 
+                  '<td>'+  
+                    '<div class="form-group">'+
+                            '<input type="text" name="description[]" id="description'+i+'" alt="'+i+'" class="form-control" placeholder="Description">'+
+                    '</div>'+
+                  '</td>'+
+                  '<td>'+
+                    '<div class="form-group">'+                         
+                        '<div class="input-group">'+
+                          '<input type="text" name="quantite[]" id="quantite'+i+'" alt="'+i+'" class="form-control" placeholder="quantité">'+
                         '</div>'+
-                    '</td>'+ 
-                    '<td>'+
-                      '<div class="form-group">'+                         
-                          '<div class="input-group">'+
-                            '<input type="text" name="prix[]" id="prix'+i+'" alt="'+i+'" class="form-control" placeholder="Prix">'+
-                          '</div>'+
+                      '</div>'+
+                  '</td>'+ 
+                  '<td>'+
+                    '<div class="form-group">'+                         
+                        '<div class="input-group">'+
+                          '<input type="text" name="prix[]" id="prix'+i+'" alt="'+i+'" class="form-control" placeholder="Prix">'+
                         '</div>'+
-                    '</td>'+
-                    '<td>'+
-                        '<div class="form-group">'+
-                            '<select name="entreprise[]" class="form-control">'+
-                              <?php foreach ($entreprises as $entreprise):?>
-                                '<option><?= $entreprise['id_en']?></option>'+
-                              <?php endforeach ?>
-                            '</select>'+
                       '</div>'+
-                    '</td>'+
-                      /*'<td>'+
-                      '<div class="form-group">'+                         
-                          '<div class="input-group">'+
-                            '<input type="text" name="nom_cli[]" id="nom_cli'+i+'" alt="'+i+'" class="form-control" placeholder="Nom Client">'+
-                          '</div>'+
+                  '</td>'+ 
+/*                  '<td>'+
+                    '<div class="form-group">'+                         
+                        '<div class="input-group">'+
+                          '<input type="text" name="nom_cli[]" id="nom_cli'+i+'" alt="'+i+'" class="form-control" placeholder="Nom Client">'+
                         '</div>'+
-                    '</td>'+*/
-                    '<td>'+
-                      '<div class="form-group">'+                         
-                          '<div class="input-group">'+
-                            '<select name="id_client[]" id="id_client'+i+'" alt="'+i+'" class="form-control">'+
-                              <?php foreach ($clients as $client): ?>
-                                '<option>'+<?= $client['id_cli']?>+'</option>'+
-                              <?php endforeach ?> 
-                          '</select>'+
-                          '</div>'+
                       '</div>'+
-                    '</td>'+ 
-                    '<td>'+
-                      '<div class="form-group">'+                         
-                          '<div class="input-group">'+
-                              '<select name="tva[]" id="tva'+i+'" alt="'+i+'" class="form-control">'+
-                                  '<option>'+'</option>'+
-                                  '<option>'+ 20 +'</option>'+
-                                  '<option>'+ 30 +'</option>'+
-                              '</select>'+
-                          '</div>'+
-                    '</td>'+ 
-                    '<td>'+
-                        '<div class="form-group">'+
-                            '<select name="status[]" class="form-control">'+
-                              <?php foreach ($status as $stat):?>
-                                '<option><?= $stat['id_etat']?></option>'+
-                              <?php endforeach ?>
-                            '</select>'+
-                      '</div>'+
-                    '</td>'+
-                    '<td>'+
-                      '<div class="form-group">'+
-                        '<span class="input-group-btn" &nbsp>'+
+                  '</td>'+*/
+                  '<td>'+
+                    '<div class="form-group">'+                         
+                        '<div class="input-group">'+
+                          '<select name="id_client[]" id="id_client'+i+'" alt="'+i+'" class="form-control">'+
+                            <?php foreach ($clients as $client): ?>
+                              '<option>'+<?= $client['id_cli']?>+'</option>'+
+                            <?php endforeach ?> 
+                         '</select>'+
+                        '</div>'+
+                    '</div>'+
+                  '</td>'+ 
+                  '<td>'+
+                    '<div class="form-group">'+                         
+                        '<div class="input-group">'+
+                          '<select name="entreprises[]" id="id_client'+i+'" alt="'+i+'" class="form-control">'+
+                            <?php foreach ($entreprises as $entreprise): ?>
+                              '<option>'+<?= $entreprise['id_en']?>+'</option>'+
+                            <?php endforeach ?> 
+                         '</select>'+
+                        '</div>'+
+                    '</div>'+
+                  '</td>'+ 
+                  '<td>'+
+                    '<div class="form-group">'+                         
+                        '<div class="input-group">'+
+                          '<select name="tva[]" id="tva'+i+'" alt="'+i+'" class="form-control">'+
+                              '<option>'+'</option>'+
+                              '<option>'+ 20 +'</option>'+
+                              '<option>'+ 30 +'</option>'+
+                         '</select>'+
+                         '<span class="input-group-btn" &nbsp>'+
                           '<button type="button" class="btn btn-danger del-element glyphicon glyphicon-plus"><i class="fa fa-minus-square"></i></button>'+
-                        '</span>'+
-                      '</div>'+
-                    '</td>'+ 
+                         '</span>'+
+                        '</div>'+
+                    '</div>'+
+                  '</td>'+ 
                   '<div class="ln_solid"></div>'+
                 '</tr>'+
               '</table>'+

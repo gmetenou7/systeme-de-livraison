@@ -335,17 +335,22 @@
          * SECTION ADMIN
         */
         //inserer les article en base de données pour l'admin
-        public function insert($date, $nom_pro, $qte, $desc, $prix, $tva,  $code_fact,$code_cli, $code_com, $code_en, $etat)
+        //inserer les article en base de données pour l'admin
+        public function insert($data)
         {
-           
-            $this->db->trans_start();
-            $this->db->query("INSERT INTO facturation (code_facture, code_client) VALUES ('{$code_fact}',{$code_cli})");
-            $this->db->query("INSERT INTO commander (date_com, code_com, comm_en, code_client_com, code_facture_com, etat_com) VALUES ('{$date}' ,'{$code_com}',{$code_en}, {$code_cli}, {$code_fact}, {$etat})");
-            $this->db->query("INSERT INTO produit (nom_pro, quantite, prix_u, code_fact_pro, code_cli, code_com_prod, description, tva) VALUES ('{$nom_pro}','{$qte}', '{$prix}', '{$code_fact}', '{$code_cli}', '{$code_com}', '{$desc}', '{$tva}')");
-            $this->db->trans_strict(FALSE);
-            $this->db->trans_complete();
+            $this->db->insert('produit', $data);
         } 
 
+        //inserer le code facture
+        public function insertfac($data)
+        {
+            $this->db->insert('facturation', $data);
+        } 
+        //inserer le code de la commande
+        public function insertcom($data)
+        {
+            $this->db->insert('commander', $data);
+        } 
         // modifier le prtoduit
         public function edit($id_prod){
            $req = $this->db->where('id_prod',$id_prod)->get('produit')->result_array();
